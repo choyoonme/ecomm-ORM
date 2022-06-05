@@ -1,128 +1,258 @@
-# ecomm-ORM
+# 13 Object-Relational Mapping (ORM): E-Commerce Back End
 
-## Overview:
+## Your Task
 
-A database is essential to any application that collects data. Larger applications typically collect more data&mdash;making data management more complex. For example, we might have to compare data across databases, migrate an app's existing database, or even use various types of databases. **Object-relational mapping (ORM)** makes these tasks more manageable by helping us to interact with databases using JavaScript.
+Internet retail, also known as **e-commerce**, is the largest sector of the electronics industry, generating an estimated $29 trillion in 2019. E-commerce platforms like Shopify and WooCommerce provide a suite of services to businesses of all sizes. Due to their prevalence, understanding the fundamental architecture of these platforms will benefit you as a full-stack web developer.
 
-We can choose from many ORM tools, but for this unit we will use Sequelize. A popular JavaScript ORM that uses object-oriented programming, Sequelize enables us to communicate with Postgres, MySQL, MariaDB, SQLite, and Microsoft SQL Server using Node.js. It also helps make relationships between the data easier to recognize and leverage. Thus, we can see how the data interacts much better than we could with plain SQL.
+Your task is to build the back end for an e-commerce site by modifying starter code. You’ll configure a working Express.js API to use Sequelize to interact with a MySQL database.
 
-## Key Topics
+Because this application won’t be deployed, you’ll also need to provide a link to a walkthrough video that demonstrates its functionality and all of the acceptance criteria being met. You’ll need to submit a link to the video and add it to the readme of your project.
 
-The following topics will be covered in this unit:
+## User Story
 
-- [Sequelize](https://sequelize.org/master/)
+```md
+AS A manager at an internet retail company
+I WANT a back end for my e-commerce website that uses the latest technologies
+SO THAT my company can compete with other e-commerce companies
+```
 
-  - [Models](https://sequelize.org/master/manual/model-basics.html)
+## Acceptance Criteria
 
-  - [Data types](https://sequelize.org/master/manual/model-basics.html#data-types)
+```md
+GIVEN a functional Express.js API
+WHEN I add my database name, MySQL username, and MySQL password to an environment variable file
+THEN I am able to connect to a database using Sequelize
+WHEN I enter schema and seed commands
+THEN a development database is created and is seeded with test data
+WHEN I enter the command to invoke the application
+THEN my server is started and the Sequelize models are synced to the MySQL database
+WHEN I open API GET routes in Insomnia for categories, products, or tags
+THEN the data for each of these routes is displayed in a formatted JSON
+WHEN I test API POST, PUT, and DELETE routes in Insomnia
+THEN I am able to successfully create, update, and delete data in my database
+```
 
-  - [Associations](https://sequelize.org/master/manual/assocs.html)
+## Mock-Up
 
-  - [Model querying](https://sequelize.org/master/manual/model-querying-basics.html)
+The following animation shows the application's GET routes to return all categories, all products, and all tags being tested in Insomnia:
 
-  - [Method instances](https://sequelize.org/master/manual/model-basics.html#taking-advantage-of-models-being-classes)
+![In Insomnia, the user tests “GET tags,” “GET Categories,” and “GET All Products.”.](./Assets/13-orm-homework-demo-01.gif)
 
-  - [Validation and constraints](https://sequelize.org/master/manual/validations-and-constraints.html)
+The following animation shows the application's GET routes to return a single category, a single product, and a single tag being tested in Insomnia:
 
-- [dotenv](https://www.npmjs.com/package/dotenv)
+![In Insomnia, the user tests “GET tag by id,” “GET Category by ID,” and “GET One Product.”](./Assets/13-orm-homework-demo-02.gif)
 
-- [async and await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+The following animation shows the application's POST, PUT, and DELETE routes for categories being tested in Insomnia:
 
-- [try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
+![In Insomnia, the user tests “DELETE Category by ID,” “CREATE Category,” and “UPDATE Category.”](./Assets/13-orm-homework-demo-03.gif)
 
-- [RESTful routes](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services)
+Your walkthrough video should also show the POST, PUT, and DELETE routes for products and tags being tested in Insomnia.
 
-- [HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+## Getting Started
 
-- [bcrypt](https://www.npmjs.com/package/bcrypt)
+You’ll need to use the [MySQL2](https://www.npmjs.com/package/mysql2) and [Sequelize](https://www.npmjs.com/package/sequelize) packages to connect your Express.js API to a MySQL database and the [dotenv](https://www.npmjs.com/package/dotenv) package to use environment variables to store sensitive data.
 
-- [ESLint](https://eslint.org/docs/user-guide/configuring)
+Use the `schema.sql` file in the `db` folder to create your database with MySQL shell commands. Use environment variables to store sensitive data like your MySQL username, password, and database name.
 
-## Learning Objectives
+### Database Models
 
-You will be employer-ready if you are able to:
+Your database should contain the following four models, including the requirements listed for each model:
 
-- Connect to a database using Sequelize and environment variables.
+- `Category`
 
-- Create and configure a Sequelize model.
+  - `id`
 
-- Perform CRUD operations with Sequelize methods.
+    - Integer.
 
-- Write a script to seed a database with initial data.
+    - Doesn't allow null values.
 
-- Convert asynchronous code to synchronous code using `async` and `await`.
+    - Set as primary key.
 
-- Catch errors using `try...catch`.
+    - Uses auto increment.
 
-- Ensure that HTTP requests respond with the correct status code.
+  - `category_name`
 
-- Use validation tools on a Sequelize model.
+    - String.
 
-- Encrypt a password using `bcrypt`.
+    - Doesn't allow null values.
 
-- Automate functionality using Sequelize Hooks.
+- `Product`
 
-- Create and run a custom method on a Sequelize instance.
+  - `id`
 
-- Implement and know when to use different Sequelize associations for one-to-one, one-to-many, and many-to-many relationships.
+    - Integer.
 
-- Perform subqueries using a combination of Sequelize methods and plain SQL syntax.
+    - Doesn't allow null values.
 
-- Enforce code styling for an application using ESLint.
+    - Set as primary key.
 
-- Deploy an application with a MySQL database to Heroku.
+    - Uses auto increment.
 
-## Technical Interview Preparation
+  - `product_name`
 
-You will be employer-competitive if you are able to solve the following algorithms and successfully complete the assessments.
+    - String.
 
-### Algorithms
+    - Doesn't allow null values.
 
-Practicing algorithm-based interview questions is one of the best ways to prepare for interviews. Watch the `📹 Let's Code` video(s) for tips and tricks on how to solve the algorithm.
+  - `price`
 
-- [01: Double Triple Map](./03-Algorithms/01-double-triple-map)
+    - Decimal.
 
-  - 📹 [Let's Code Double Triple Map!](https://2u-20.wistia.com/medias/pz1ugrv0yu)
+    - Doesn't allow null values.
 
-- [02: Array Intersection](./03-Algorithms/02-array-intersection)
+    - Validates that the value is a decimal.
 
-- [03: Squares of a Sorted Array](./03-Algorithms/03-squares-of-a-sorted-array)
+  - `stock`
 
-### Assessments
+    - Integer.
 
-Assess your knowledge by answering technical interview questions and solving coding challenges.
+    - Doesn't allow null values.
 
-- [Unit 13 Technical Interview Preparation](https://forms.gle/xH18Tn3PwctkCUBi9)
+    - Set a default value of `10`.
 
-## Homework
+    - Validates that the value is numeric.
 
-In the homework for this unit, you will create an e-commerce back end. You will be given a working Express.js API that you will have to configure using Sequelize. Once finished, you should be able to connect to the database, and you should have functioning CRUD commands.
+  - `category_id`
 
-## Career Connection
+    - Integer.
 
-Career services material for this unit is located in the [Career Connection folder](./04-Career-Connection/README.md). For more information about career services, including coding milestones, demo days, technical toolkits, workshops, and additional resources, visit the [career services website](https://careernetwork.2u.com/?utm_medium=Academics&utm_source=boot_camp/).
+    - References the `Category` model's `id`.
 
-## Heads-Up
+- `Tag`
 
-In the next unit, we will return to full-stack development and explore an architecture called Model-View-Controller (MVC). We will also cover a templating engine called Handlebars.js. Finally, we will touch on front-end authentication.
+  - `id`
 
-## Resources
+    - Integer.
 
-Here are some additional resources to help solidify the topics covered in this unit.
+    - Doesn't allow null values.
 
-### Git Guide
+    - Set as primary key.
 
-Refer to the Git Guide to review the git concept for this unit. Watch the `📹 Git Guide` video for an additional walkthrough of the git concept.
+    - Uses auto increment.
 
-- 📖 [Git Guide: ESLint](./01-Activities/27-Evr_Eslint)
+  - `tag_name`
 
-- 📹 [Git Guide Video: ESLint](https://2u-20.wistia.com/medias/8enml3wuio)
+    - String.
 
-### Full-Stack Blog Posts
+- `ProductTag`
 
-Check out the [Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/) for additional resources, like walkthroughs, articles, and installation guides.
+  - `id`
 
-- 📖 [Deploy with Heroku and MySQL](https://coding-boot-camp.github.io/full-stack/heroku/deploy-with-heroku-and-mysql)
+    - Integer.
+
+    - Doesn't allow null values.
+
+    - Set as primary key.
+
+    - Uses auto increment.
+
+  - `product_id`
+
+    - Integer.
+
+    - References the `Product` model's `id`.
+
+  - `tag_id`
+
+    - Integer.
+
+    - References the `Tag` model's `id`.
+
+### Associations
+
+You'll need to execute association methods on your Sequelize models to create the following relationships between them:
+
+- `Product` belongs to `Category`, and `Category` has many `Product` models, as a category can have multiple products but a product can only belong to one category.
+
+- `Product` belongs to many `Tag` models, and `Tag` belongs to many `Product` models. Allow products to have multiple tags and tags to have many products by using the `ProductTag` through model.
+
+> **Hint:** Make sure you set up foreign key relationships that match the column we created in the respective models.
+
+### Fill Out the API Routes to Perform RESTful CRUD Operations
+
+Fill out the unfinished routes in `product-routes.js`, `tag-routes.js`, and `category-routes.js` to perform create, read, update, and delete operations using your Sequelize models.
+
+Note that the functionality for creating the many-to-many relationship for products has already been completed for you.
+
+> **Hint**: Be sure to look at the mini-project code for syntax help and use your model's column definitions to figure out what `req.body` will be for POST and PUT routes!
+
+### Seed the Database
+
+After creating the models and routes, run `npm run seed` to seed data to your database so that you can test your routes.
+
+### Sync Sequelize to the Database on Server Start
+
+Create the code needed in `server.js` to sync the Sequelize models to the MySQL database on server start.
+
+## Grading Requirements
+
+> **Note**: If a homework assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
+>
+> - A repository that has no code
+>
+> - A repository that includes a unique name but nothing else
+>
+> - A repository that includes only a README file but nothing else
+>
+> - A repository that only includes starter code
+
+This homework is graded based on the following criteria:
+
+### Deliverables: 10%
+
+- The GitHub repository containing your application code.
+
+### Walkthrough Video: 37%
+
+- A walkthrough video that demonstrates the functionality of the e-commerce back end must be submitted, and a link to the video should be included in your readme file.
+
+- The walkthrough video must show all of the technical acceptance criteria being met.
+
+- The walkthrough video must demonstrate how to create the schema from the MySQL shell.
+
+- The walkthrough video must demonstrate how to seed the database from the command line.
+
+- The walkthrough video must demonstrate how to start the application’s server.
+
+- The walkthrough video must demonstrate GET routes for all categories, all products, and all tags being tested in Insomnia.
+
+- The walkthrough video must demonstrate GET routes for a single category, a single product, and a single tag being tested in Insomnia.
+
+- The walkthrough video must demonstrate POST, PUT, and DELETE routes for categories, products, and tags being tested in Insomnia.
+
+### Technical Acceptance Criteria: 40%
+
+- Satisfies all of the preceding acceptance criteria plus the following:
+
+  - Connects to a MySQL database using the [MySQL2](https://www.npmjs.com/package/mysql) and [Sequelize](https://www.npmjs.com/package/sequelize) packages.
+
+  - Stores sensitive data, like a user’s MySQL username, password, and database name, using environment variables through the [dotenv](https://www.npmjs.com/package/dotenv) package.
+
+  - Syncs Sequelize models to a MySQL database on the server start.
+
+  - Includes column definitions for all four models outlined in the homework instructions.
+
+  - Includes model associations outlined in the homework instructions.
+
+### Repository Quality: 13%
+
+- Repository has a unique name.
+
+- Repository follows best practices for file structure and naming conventions.
+
+- Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
+
+- Repository contains multiple descriptive commit messages.
+
+- Repository contains quality readme with description and a link to a walkthrough video.
+
+## Review
+
+You are required to submit BOTH of the following for review:
+
+- A walkthrough video demonstrating the functionality of the application and all of the acceptance criteria being met.
+
+- The URL of the GitHub repository. Give the repository a unique name and include a readme describing the project.
 
 ---
 
